@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  cf-layer7--spectrum-with-proxy-protocol--nginx:
+    container_name: cf-layer7--spectrum-with-proxy-protocol--nginx
+    image: nginx:latest
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./confs/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./data/nginx/logs:/var/log/nginx/
+    ports:
+      - 12345:12345
+    deploy:
+      resources:
+        reservations:
+          cpus: '2'
+          memory: 2G
+        limits:
+          cpus: '4'
+          memory: 4G
+  cf-layer7--spectrum-with-proxy-protocol--sftp:
+    container_name: cf-layer7--spectrum-with-proxy-protocol--sftp
+    image: alpine:latest
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    entrypoint: "/bin/sh /entrypoint.sh"
+    volumes:
+      - ./confs/sftp-server/entrypoint.sh:/entrypoint.sh
+      - ./confs/sftp-server/sshd_config:/etc/ssh/sshd_config
+      - ./data/sshd_data:/etc/ssh/sshd_data
+      - ./data/storage:/storage
+    deploy:
+      resources:
+        reservations:
+          cpus: '2'
+          memory: 2G
+        limits:
+          cpus: '4'
+          memory: 4G
