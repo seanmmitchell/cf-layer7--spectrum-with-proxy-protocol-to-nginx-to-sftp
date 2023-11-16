@@ -1,4 +1,3 @@
-cf-layer7--spectrum-with-proxy-protocol-to-nginx-to-sftp-example
 # Cloudflare Layer 7 Spectrum with Proxy Protocol to NGINX to SFTP Example
 This project demonstrates how you can ingest traffic from Cloudflare Spectrum with NGINX, log the values in the proxy protocol, and then finally forward the request to a backend TCP server. (An SFTP Server in this example)
 
